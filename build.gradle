@@ -1,0 +1,34 @@
+plugins {
+	id 'java'
+	id 'application'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+application {
+	applicationDefaultJvmArgs = [
+		'-javaagent:/Users/alex.fernandes/java-lib/dd-java-agent-0.50.0.jar',
+		'-Ddd.service=sample-jetty',
+		'-Ddd.logs.injection=true',
+		]
+    mainClassName = 'com.datadog.Main'
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation group: 'org.apache.kafka', name: 'kafka-clients', version: '2.5.0'
+
+	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+	implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '6.3'
+
+	implementation group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.26.v20200117'	
+	
+	runtimeOnly files('src/dist/lib/resources')
+}
